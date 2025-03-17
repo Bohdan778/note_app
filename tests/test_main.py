@@ -3,16 +3,23 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_main_running():
     """Перевіряє, чи працює головний API"""
     response = client.get("/")
-    assert response.status_code == 200  # Головна сторінка має повертати статус 200
-    assert response.json() == {"message": "Welcome to the AI-Enhanced Notes Management System"}
+    assert (
+        response.status_code == 200
+    )  # Головна сторінка має повертати статус 200
+    assert response.json() == {
+        "message": "Welcome to the AI-Enhanced Notes Management System"
+    }
+
 
 def test_main_not_found():
-    """Перевіряє, чи правильно повертається статус 404 для неіснуючого маршруту"""
     response = client.get("/nonexistent-route")
-    assert response.status_code == 404  # Неіснуючий маршрут має повертати статус 404
+    assert (
+        response.status_code == 404
+    )  # Неіснуючий маршрут має повертати статус 404
     assert response.json() == {"detail": "Not Found"}
 
 
@@ -23,6 +30,9 @@ def test_create_note():
         "content": "This is a test note content",
     }
     response = client.post("/notes/", json=data)
-    assert response.status_code == 201  # Створення нотатки має повертати статус 201
+    assert (
+        response.status_code == 201
+    )  # Створення нотатки має повертати статус 201
     assert response.json()["title"] == "Test Note"  # Перевірка назви нотатки
-    assert response.json()["content"] == "This is a test note content"  # Перевірка контенту
+    # Перевірка контенту
+    assert response.json()["content"] == "This is a test note content"

@@ -8,16 +8,17 @@ from app.services import ai as ai_service
 
 router = APIRouter(prefix="/ai", tags=["ai"])
 
+
 @router.get("/notes/{note_id}/summary", response_model=NoteSummary)
-async def summarize_note(note_id: int, db: AsyncSession = Depends(get_async_db)):
+async def summarize_note(
+    note_id: int, db: AsyncSession = Depends(get_async_db)
+):
     """Generate a summary for a note using AI"""
     note = await notes_service.get_note_async(db, note_id)
     summary = await ai_service.summarize_text_async(note.content, note.title)
-    
-    return {
-        "note_id": note.id,
-        "summary": summary
-    }
+
+    return {"note_id": note.id, "summary": summary}
+
 
 @router.get("/models")
 async def get_available_models():

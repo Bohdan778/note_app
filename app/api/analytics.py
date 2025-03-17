@@ -7,6 +7,7 @@ from app.services import analytics as analytics_service
 
 router = APIRouter(prefix="/analytics", tags=["analytics"])
 
+
 @router.get("/notes", response_model=AnalyticsResponse)
 async def get_notes_analytics(db: AsyncSession = Depends(get_async_db)):
     """Get analytics for all notes"""

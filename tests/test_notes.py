@@ -14,6 +14,19 @@ def test_create_note(client):
     assert data["content"] == "This is a test note content."
     assert "id" in data
 
+def test_create_note_with_simple_check(client):
+    """Simple check for creating a note"""
+    response = client.post(
+        "/notes/",
+        json={"title": "Simple Test", "content": "Simple test content for checking."}
+    )
+    assert response.status_code == 201  # Перевірка, що статус відповіді 201 (Created)
+    data = response.json()
+    assert "id" in data  # Перевірка, що поле "id" присутнє в відповіді
+    assert data["title"] == "Simple Test"  # Перевірка правильності назви
+    assert data["content"] == "Simple test content for checking."  # Перевірка правильності контенту
+
+
 def test_get_note(client):
     """Test getting a note by ID"""
     # First create a note
@@ -102,3 +115,22 @@ def test_get_note_history(client):
     assert len(data["history"]) == 2
     assert data["history"][0]["title"] == "Original Title"
     assert data["history"][1]["title"] == "Updated Title 1"
+
+def test_create_note_with_missing_fields(client):
+    """Тест на створення нотатки з відсутніми обов'язковими полями"""
+    response = client.post("/notes", json={"title": "New Note"})
+    assert response.status_code == 422  # Змінили на 422, бо це правильний код для відсутності необхідних полів
+
+
+def test_update_note_with_invalid_data(client):
+    """Тест на оновлення нотатки з недійсними даними"""
+    response = client.put("/notes/999", json={"content": "Updated content without title"})  # Невірний ID
+    assert response.status_code == 404  # Змінили на 404, бо ID не існує
+    assert response.json() == {"detail": "Note not found"}
+
+
+def test_delete_nonexistent_note(client):
+    """Тест на видалення нотатки, якої не існує"""
+    response = client.delete("/notes/999")  # ID, якого немає в базі
+    assert response.status_code == 404
+    assert response.json() == {"detail": "Note not found"}

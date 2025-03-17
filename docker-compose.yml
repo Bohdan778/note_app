@@ -9,5 +9,5 @@ services:
       - DATABASE_URL=sqlite:///./notes.db
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     volumes:
-      - ./data:/app/data
+      - .:/app"
     restart: unless-stopped

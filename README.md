@@ -83,23 +83,6 @@ pytest
 For test coverage report:
 pytest --cov=app tests/
 
-
-## Project Structure
-notes_app/
-├── app/
-│   ├── **init**.py
-│   ├── main.py              # FastAPI application entry point
-│   ├── database.py          # Database configuration
-│   ├── models/              # SQLAlchemy models
-│   ├── schemas/             # Pydantic schemas
-│   ├── api/                 # API endpoints
-│   ├── services/            # Business logic
-│   └── utils/               # Utility functions
-├── tests/                   # Test files
-├── .env                     # Environment variables (not in git)
-├── requirements.txt         # Project dependencies
-└── README.md                # Project documentation
-
 ## Implementation Details
 
 ### Notes Management

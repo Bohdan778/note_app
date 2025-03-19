@@ -95,7 +95,6 @@ def summarize_text(text: str, title: str = "") -> str:
     except Exception as e:
         # Якщо виникла помилка, повертаємо фіктивний підсумок
         fallback_summary = f"Підсумок для '{title}': Основні ідеї."
-
         # return fallback_summary
         raise HTTPException(
             status_code=500,

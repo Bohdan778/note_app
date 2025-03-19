@@ -9,7 +9,6 @@ from fastapi import HTTPException
 
 # Async versions
 
-
 async def create_note_async(db: AsyncSession, note: NoteCreate) -> Note:
     """Create a new note (async)"""
     db_note = Note(title=note.title, content=note.content)
